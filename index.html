@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Palomino</title>
+    <!-- Importing the Inter font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;700&display=swap" rel="stylesheet">
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var images = [
+                './images/red_cells.jpg',
+                './images/yello_cells.jpg',
+                './images/guns.jpg',
+                './images/bathroom.jpg',
+                './images/kitchen.jpg',
+            ];
+
+            var backgroundImage1 = document.getElementById('background1');
+            var backgroundImage2 = document.getElementById('background2');
+            var currentImageIndex = images.length * Math.random() | 0;  // Pick a random image index
+            var isBackground1OnTop = true;  // We start with background1 on top
+
+            function setBackground() {
+                if (isBackground1OnTop) {
+                    backgroundImage1.style.backgroundImage = `url(${images[currentImageIndex]})`;
+                    backgroundImage1.style.opacity = '1';
+                    backgroundImage2.style.opacity = '0';
+                } else {
+                    backgroundImage2.style.backgroundImage = `url(${images[currentImageIndex]})`;
+                    backgroundImage2.style.opacity = '1';
+                    backgroundImage1.style.opacity = '0';
+                }
+
+                isBackground1OnTop = !isBackground1OnTop;
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+            }
+
+
+            setBackground();  // Set the initial background
+            setInterval(setBackground, 10000);
+        });
+    </script>
+    <style>
+        /* Full screen background and overlay styles */
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        .layered-bg {
+            position: relative;
+            height: 100%;
+            width: 100%;
+        }
+
+        .layered-bg::before,
+        .layered-bg::after,
+        .layered-bg>div {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        /* .layered-bg {
+            background: linear-gradient(45deg, #232331 0%, #41415A 100%);
+            opacity: 0.8;
+        } */
+        /* .layered-bg::before {
+            background: rgba(0, 0, 0, 0.50);
+        } */
+        .layered-bg>div:nth-child(1) {
+            opacity: 0.5;
+            background: radial-gradient(165.83% 93.28% at 93.28% 91.11%, #2BC38C 0%, rgba(43, 195, 140, 0.00) 100%);
+        }
+
+        .layered-bg>div:nth-child(2) {
+            opacity: 0.5;
+            background: radial-gradient(301.33% 169.50% at 0.00% 100.00%, #6969A9 0%, rgba(159, 159, 219, 0.00) 100%);
+        }
+
+        .layered-bg>div:nth-child(3) {
+            opacity: 0.5;
+            background: linear-gradient(180deg, #5F80B1 0%, rgba(95, 128, 177, 0.00) 100%);
+        }
+
+        .layered-bg::after {
+            background: rgba(0, 0, 0, 0.55);
+        }
+
+        .background-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            /* This will make sure anything outside this container will not be shown */
+        }
+
+        .background {
+            z-index: 1;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('./images/bar.jpg');
+            background-position: center;
+            background-size: cover;
+            filter: blur(5px);
+            transform: scale(1.1);
+            filter: grayscale(100%);
+            animation: moveHorizontally 40s infinite;
+            transition: opacity 3s ease;
+            opacity: 1;
+        }
+
+        #background2 {
+            opacity: 0;
+            z-index: 2;
+        }
+
+        @keyframes moveHorizontally {
+            0% {
+                transform: translateX(0) scale(1.1);
+            }
+
+            50% {
+                transform: translateX(-2.5%) scale(1.1);
+            }
+
+            100% {
+                transform: translateX(0) scale(1.1);
+            }
+        }
+
+        .background {
+            /* ... existing styles ... */
+            animation: moveHorizontally 40s infinite;
+        }
+
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(0deg, rgba(0, 26, 46, 0.20) 0%, rgba(0, 26, 46, 0.20) 100%), linear-gradient(0deg, rgba(0, 0, 0, 0.20) 0%, rgba(0, 0, 0, 0.20) 100%), radial-gradient(100.80% 56.55% at 7.37% 10.23%, rgba(72, 73, 73, 0.60) 0%, rgba(217, 217, 217, 0.00) 100%, rgba(208, 208, 208, 0.00) 100%), radial-gradient(247.21% 185.28% at 14.30% 105.23%, rgba(17, 66, 102, 0.60) 0%, rgba(73, 32, 124, 0.00) 47.66%), radial-gradient(139.92% 102.99% at 85.26% 74.81%, rgba(95, 177, 163, 0.60) 0%, rgba(227, 255, 250, 0.27) 50%, rgba(233, 255, 251, 0.00) 100%), rgba(0, 0, 0, 0.40);
+        }
+
+        .noise {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('./images/noise.png');
+            opacity: 0.1;
+        }
+
+        /* Text styles */
+        .center-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            font-weight: 200;
+            color: #d3d3d3;
+        }
+
+        .center-text span {
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .layered-bg,
+        .noise,
+        .center-text {
+            z-index: 3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background" id="background1"></div>
+    <div class="background" id="background2"></div>
+
+    <div class="layered-bg">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <div class="noise"></div>
+    <div class="center-text">Uniendose a <span>Marginal</span>...</div>
+</body>
+
+</html>
